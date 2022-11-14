@@ -1,0 +1,43 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Let's see how long I will last :-)</title>
+</head>
+<body>
+<div id="LivedSinceStartTimerDiv"></div>
+<script>
+var time0 = 1668433325284;
+function timestamp_difference_to_smhd(el){
+let seconds = Math.floor(el/1000);
+let minutes = Math.floor(seconds/60);
+    seconds-=minutes*60;
+let hours = Math.floor(minutes/60);
+    minutes-=hours*60;
+let days = Math.floor(hours/24)
+    return {seconds,minutes,hours,days}
+}
+function lt(){
+    spawnTimerContainer({t0:time0,header:'Challenge started',sequencer:oneSecondLoop,divid:'LivedSinceStartTimerDiv'})
+}
+function spawnTimerContainer(params){
+    let since = params.t0;
+    let header = params.header;
+    let sequencer = params.sequencer;
+    let where = document.getElementById(params.divid);
+    // let el = Date.now()-since;
+    sequencer(()=>{let el = Date.now()-since;
+    let o = (timestamp_difference_to_smhd(el));
+
+;where.innerHTML=`
+<h3>${header}</h3>
+<p>${o.hours} hours ${o.minutes} minutes ${o.seconds} seconds ago</p>`});
+}
+function oneSecondLoop(callback){
+setTimeout(()=>{callback();oneSecondLoop(callback)}, 1000);
+}
+lt()
+</script>   
+</body>
+</html>
